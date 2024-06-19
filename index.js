@@ -42,16 +42,6 @@ async function connectAndQuery() {
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-///////////////////////////////////////////??????????????????????????????????
-// app.get("/dashboard", async (req, res) => {
-//   try {
-//     const result = await connectAndQuery();
-//     res.json({ msg: "Fetch Users Successfully", data: result.recordsets });
-//   } catch (err) {
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
-/////////////////////////////////////////??????????????????????????????
 
 app.get("/dashboard", async (req, res) => {
   const { status, storeNo, startDate, endDate } = req.query;
@@ -66,7 +56,6 @@ app.get("/dashboard", async (req, res) => {
     if (startDate && endDate) {
       query += ` AND store_business_date BETWEEN '${startDate}' AND '${endDate}'`;
     }
-    // console.log("SQL QUERY: ", query); // Log the query////////////////////////////////////////
     const pool = await sql.connect(config);
     let result = await pool.request().query(query);
     res.json({ msg: "Fetch Users Successfully", data: result.recordsets });
@@ -74,8 +63,6 @@ app.get("/dashboard", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-//////////////////////////////////////////////??????????????????????????????????
 
 app.get("/data", async (req, res) => {
   const { status } = req.query;
